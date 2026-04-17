@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academic Cover Page | IU Bangladesh</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root { 
+      --a4-width: 210mm; 
+      --a4-height: 297mm; 
+      --primary-blue: #1e3a8a;
+      --accent-gold: #b4934a;
+    }
+    body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
+    
+    #capture-area { display: none; }
+
+    @media print { 
+      @page { size: A4; margin: 0; } 
+      body { background: white; margin: 0; padding: 0; } 
+      .no-print { display: none !important; } 
+      
+      #capture-area { 
+        display: block !important;
+        width: var(--a4-width); 
+        height: var(--a4-height); 
+        background: white; 
+        margin: 0; 
+        padding: 15mm; 
+        box-sizing: border-box; 
+        position: relative;
+        print-color-adjust: exact;
+      } 
+    }
+
+    .oxford-border{
+      border: 2px solid var(--primary-blue);
+      height: 100%;
+      padding: 10mm;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .oxford-border::before{
+      content: '';
+      position: absolute;
+      top: 4px; left: 4px; right: 4px; bottom: 4px;
+      border: 1px solid var(--primary-blue);
+    }
+    .title-underline{
+      width: 100px;
+      height: 3px;
+      background: var(--accent-gold);
+      margin: 15px auto;
+    }
+    .submission-grid{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border-top: 2px solid var(--primary-blue);
+      margin-top: 30px;
+    }
+    .info-box{ padding: 20px; }
+    .info-box:first-child{ border-right: 1px solid #e5e7eb; }
+    .label-heading{
+      font-family: 'Libre+Baskerville', serif;
+      color: var(--primary-blue);
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 15px;
+    }
+    h1,h2{ font-family: 'Playfair Display', serif; }
+    
+    .stylish-name {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 700;
+    }
+
+    .hidden-field { display: none; }
+
+    .align-info {
+      display: flex;
+      align-items: flex-start;
+    }
+    .align-label {
+      min-width: 65px; 
+      display: inline-block;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body class="p-0 md:p-8">
+
+<div class="max-w-md mx-auto">
+  <div class="no-print">
+    <div class="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
+      <div class="bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 p-6 text-white text-center border-b-4 border-yellow-500">
+        <div class="inline-block p-3 bg-white/10 rounded-full mb-3 backdrop-blur-sm">
+            <i class="fa-solid fa-graduation-cap text-3xl text-yellow-400"></i>
+        </div>
+        <h2 class="text-2xl font-extrabold tracking-tight">
+          Auto Assignment <span class="text-yellow-400">Cover Page</span>
+        </h2>
+      <div class="flex items-center justify-center gap-2 mt-6 text-sm font-medium bg-gradient-to-r from-black/40 via-black/20 to-black/40 backdrop-blur-sm py-3 px-6 rounded-full shadow-lg border border-white/10">
+    <span class="text-gray-200"> Developed by</span>
+    <a href="https://www.facebook.com/monirulptk" target="_blank" class="group flex items-center gap-2 text-amber-300 hover:text-white transition-all duration-300 ease-out hover:scale-105">
+        <span class="font-semibold tracking-wide">Monirul Islam</span>
+        <i class="fas fa-heart text-xs text-red-500 group-hover:animate-pulse transition-all"></i>
+    </a>
+    
+</div>
+      </div>
+
+      <div class="p-6 space-y-5">
+        
+        <div class="space-y-3 pt-2">
+          <label class="text-xs font-black uppercase text-blue-900 tracking-widest border-b pb-1 block">Course Info</label>
+          <select id="courseNoDropdown" class="w-full p-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm outline-none" onchange="toggleCustomField('courseNoDropdown', 'courseNoCustom')">
+          </select>
+          <input type="text" id="courseNoCustom" placeholder="Type course code" class="hidden-field w-full p-2.5 border-dashed border-2 border-blue-200 rounded-lg text-sm outline-none bg-blue-50">
+          
+          <select id="courseSelectDropdown" class="w-full p-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm outline-none" onchange="toggleCustomField('courseSelectDropdown', 'courseSelect')">
+          </select>
+          <input type="text" id="courseSelect" placeholder="Type course name" class="hidden-field w-full p-2.5 border-dashed border-2 border-blue-200 rounded-lg text-sm outline-none bg-blue-50">
+        </div>
+
+        <div class="space-y-3 pt-2">
+          <label class="text-xs font-black uppercase text-blue-900 tracking-widest border-b pb-1 block">Instructor</label>
+          <select id="instructorSelectDropdown" class="w-full p-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm outline-none" onchange="toggleCustomField('instructorSelectDropdown', 'instructorSelect')">
+          </select>
+          <input type="text" id="instructorSelect" placeholder="Type instructor name" class="hidden-field w-full p-2.5 border-dashed border-2 border-blue-200 rounded-lg text-sm outline-none bg-blue-50">
+        </div>
+
+        <div class="space-y-3 pt-2">
+          <label class="text-xs font-black uppercase text-blue-900 tracking-widest border-b pb-1 block">Student Info</label>
+          <input type="text" id="studentName" placeholder="Full Name" class="w-full p-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm outline-none">
+          <div class="flex gap-2">
+            <input type="text" id="rollNo" placeholder="Roll No" class="w-1/2 p-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm outline-none">
+            <input type="text" id="regNo" placeholder="Reg No" class="w-1/2 p-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm outline-none">
+          </div>
+          <select id="sessionDropdown" class="w-full p-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm outline-none" onchange="toggleCustomField('sessionDropdown', 'session')">
+          </select>
+          <input type="text" id="session" placeholder="Type custom session" class="hidden-field w-full p-2.5 border-dashed border-2 border-blue-200 rounded-lg text-sm outline-none bg-blue-50">
+        </div>
+
+        <div class="space-y-3 pt-2">
+          <label class="text-xs font-black uppercase text-blue-900 tracking-widest border-b pb-1 block">Department</label>
+          <select id="departmentDropdown" class="w-full p-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm outline-none" onchange="toggleCustomField('departmentDropdown', 'department')">
+          </select>
+          <input type="text" id="department" placeholder="Type department name" class="hidden-field w-full p-2.5 border-dashed border-2 border-blue-200 rounded-lg text-sm outline-none bg-blue-50">
+        </div>
+
+        <button onclick="handlePrint()" class="w-full bg-blue-900 hover:bg-blue-800 text-white font-bold py-4 rounded-xl shadow-lg flex items-center justify-center gap-2 transition-all transform active:scale-95 mt-6">
+          <i class="fas fa-print"></i> Print or Save PDF
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="capture-area"></div>
+
+<script>
+// Fixed Logo URL
+let logoBase64 = "./Islalmi University log.png";
+
+const dropdownOptions = {
+  courseCodes: ["Q-2401","Q-2402","Q-2403","Q-2404","Q-2405", "Q-2301", "Q-2302", "Q-2303","Q-2304","Q-2305"],
+  courses: ["Tafsir Without Chain Of Narration","Arabic Literature and Its History","Philosophy And Muslim Sufism","Islamic History","Computer Literacy And Technology", "Modern Tafsir", "Sciences of the Noble Qur'an","Sciences of Hadith","Biography of the Prophet (S.A.W)","Communicative English Language",],
+instructors: [
+    "Professor Dr. A.B.M. Saiful Islam Siddiqi",
+    "Professor Dr. A.B.M. Faruq",
+    "Professor Dr. A.F.M. Akbar Hossain",
+    "Professor Dr. H.A.N.M. Ershad Ullah",
+    "Professor Dr. A.B.M. Siddiqur Rahman Asrafi",
+    "Professor Dr. Md Loqman Husain",
+    "Professor Dr. M. Yaqub Ali",
+    "Professor Dr. Muhammad Nasir Uddin Mizy",
+    "Professor Dr. Muhammad Jalal Uddin",
+    "Professor Dr. Muhammad Golam Rabbani",
+    "Professor Dr. Khan Muhammad Ylias",
+    "Professor Dr. Md Aminul Islam",
+    "Professor Dr. Sheikh A.B.M. Zakir Hossain",
+    "Professor Dr. A.K.M. Rasheduzaman"
+  ],
+  sessions: ["2023-24", "2022-23"],
+  departments: ["Al-Quran & Islamic Studies", "Arabic Language"]
+};
+
+const config = {
+  uniName: "Islamic University",
+  location: "Kushtia, Bangladesh"
+};
+
+function toCamelCase(str) {
+  return str
+    .toLowerCase()
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
+function initDropdowns() {
+  const populate = (id, options) => {
+    const select = document.getElementById(id);
+    options.forEach(opt => {
+      const el = document.createElement('option');
+      el.value = opt;
+      el.textContent = opt;
+      select.appendChild(el);
+    });
+    const custom = document.createElement('option');
+    custom.value = "custom";
+    custom.textContent = "-- Custom --";
+    select.appendChild(custom);
+  };
+
+  populate('courseNoDropdown', dropdownOptions.courseCodes);
+  populate('courseSelectDropdown', dropdownOptions.courses);
+  populate('instructorSelectDropdown', dropdownOptions.instructors);
+  populate('sessionDropdown', dropdownOptions.sessions);
+  populate('departmentDropdown', dropdownOptions.departments);
+}
+
+function toggleCustomField(dropdownId, customFieldId) {
+  const dropdown = document.getElementById(dropdownId);
+  const customField = document.getElementById(customFieldId);
+  
+  if (dropdown.value === "custom") {
+    customField.style.display = "block";
+  } else {
+    customField.style.display = "none";
+    customField.value = ""; 
+  }
+}
+
+function handlePrint() {
+  const roll = document.getElementById('rollNo').value || "CoverPage";
+  document.title = roll; 
+  generateTemplate();
+  
+  // SOLVED: Added 100ms timeout to ensure DOM renders before Print opens
+  setTimeout(() => {
+    window.print();
+  }, 100);
+}
+
+function generateTemplate(){
+  const getValue = (dropdownId, customId) => {
+    const dVal = document.getElementById(dropdownId).value;
+    const cVal = document.getElementById(customId).value;
+    return (dVal === "custom" ? cVal : dVal) || "";
+  };
+
+  const data = {
+    studentName: toCamelCase(document.getElementById('studentName').value || "Your Name"),
+    rollNo: document.getElementById('rollNo').value || "Your Roll",
+    regNo: document.getElementById('regNo').value || "Your Registration No.",
+    session: getValue('sessionDropdown', 'session') || "..........",
+    courseName: getValue('courseSelectDropdown', 'courseSelect') || "Course Name",
+    courseNo: getValue('courseNoDropdown', 'courseNoCustom') || "0000",
+    teacherName: toCamelCase(getValue('instructorSelectDropdown', 'instructorSelect') || "Teacher Name"),
+    deptName: getValue('departmentDropdown', 'department') || "Department Name"
+  };
+
+  const preview = document.getElementById('capture-area');
+  const today = new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+
+  preview.innerHTML = `
+    <div class="oxford-border">
+      <div class="text-center">
+        <img src="${logoBase64}" class="h-28 mx-auto mb-6" style="mix-blend-mode: multiply;">
+        <h1 class="text-4xl font-black text-blue-900 tracking-wide uppercase mb-1">${config.uniName}</h1>
+        <p class="text-lg font-bold text-gray-600 uppercase tracking-[3px]">${config.location}</p>
+        <div class="title-underline"></div>
+        <p class="text-xl font-medium italic text-gray-700 mt-2">${data.deptName}</p>
+      </div>
+
+      <div class="text-center px-10">
+        <h2 class="text-2xl font-bold text-gray-500 uppercase tracking-widest mb-4">Assignment On</h2>
+        <div class="bg-gray-50 py-8 px-4 border-y-2 border-gray-100">
+            <h3 class="text-3xl font-bold text-gray-800 leading-tight">${data.courseName}</h3>
+            <p class="text-lg font-semibold text-blue-800 mt-4">Course No: ${data.courseNo}</p>
+        </div>
+      </div>
+
+      <div>
+        <div class="submission-grid">
+          <div class="info-box bg-gray-50">
+            <h4 class="label-heading">Submitted By</h4>
+            <div class="space-y-1.5 text-gray-800">
+              <p class="stylish-name text-2xl text-blue-900 mb-2">${data.studentName}</p>
+              <div class="text-sm align-info">
+                <span class="align-label">Roll</span>: <span class="ml-2 font-medium">${data.rollNo}</span>
+              </div>
+              <div class="text-sm align-info">
+                <span class="align-label">Reg No</span>: <span class="ml-2 font-medium">${data.regNo}</span>
+              </div>
+              <div class="text-sm align-info">
+                <span class="align-label">Session</span>: <span class="ml-2 font-medium">${data.session}</span>
+              </div>
+            </div>
+          </div>
+          <div class="info-box">
+            <h4 class="label-heading">Submitted To</h4>
+            <div class="space-y-1 text-gray-800">
+              <p class="stylish-name text-2xl text-blue-900">${data.teacherName}</p>
+              <p class="text-sm font-semibold">Professor</p>
+              <p class="text-sm">${data.deptName}</p>
+              <p class="text-sm">${config.uniName}</p>
+            </div>
+          </div>
+        </div>
+        <div class="mt-8 text-center border-t border-gray-100 pt-4">
+            <p class="text-sm font-bold text-gray-500 uppercase tracking-widest">Date of Submission: ${today}</p>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+initDropdowns();
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+<!-- latest -->
