@@ -43,16 +43,17 @@
       z-index: 9999;
     }
 .toast {
-  display: flex;
+  display: inline-flex; /* কন্টেন্ট অনুযায়ী চওড়া হবে */
   align-items: center;
-  gap: 8px;
-  padding: 8px 16px; /* প্যাডিং কমানো হয়েছে */
+  gap: 6px;
+  padding: 6px 12px;
   background: #ef4444;
   color: #fff;
-  font-size: 14px; /* টেক্সট কিছুটা ছোট ও শার্প */
-  border-radius: 6px;
-  margin-bottom: 8px;
-  box-shadow: 0 2px 8px #0002;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 4px;
+  margin-bottom: 6px;
+  box-shadow: 0 2px 5px #0002;
   animation: slideIn .2s ease-out forwards;
 }
     @keyframes slideIn {
