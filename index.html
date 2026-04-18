@@ -328,46 +328,81 @@ function generateTemplate(){
   };
 
   document.getElementById('capture-area').innerHTML = `
-    <div class="watermark"><i class="fa-solid fa-graduation-cap"></i></div>
-    <div class="oxford-border" style="font-family: ${printConfig.bodyFont}">
-      <div class="text-center">
-        <img src="${logoBase64}" class="h-28 mx-auto mb-6" style="mix-blend-mode: multiply;">
-        <h1 style="font-family: ${printConfig.primaryFont}; font-size: ${printConfig.uniNameSize};" class="font-black text-blue-900 tracking-wide uppercase mb-1">${config.uniName}</h1>
-        <p style="font-size: ${printConfig.locationSize};" class="font-bold text-gray-600 uppercase tracking-[3px]">${config.location}</p>
-        <div class="title-underline"></div>
-        <p style="font-size: ${printConfig.deptNameSize}; font-family: ${printConfig.secondaryFont};" class="font-medium italic text-gray-700 mt-2">${data.deptName}</p>
-      </div>
-      <div class="text-center px-10 mt-12">
-        <h2 style="font-family: ${printConfig.primaryFont}; font-size: ${printConfig.assignmentOnSize};" class="font-bold text-gray-500 uppercase tracking-widest mb-4">Assignment On</h2>
-        <div class="bg-gray-50/80 py-8 px-4 border-y-2 border-gray-100 backdrop-blur-[2px]">
-            <h3 style="font-size: ${printConfig.courseNameSize}; font-family: ${printConfig.primaryFont};" class="font-bold text-gray-800 leading-tight">${data.courseName}</h3>
-            <p style="font-size: ${printConfig.courseNoSize}; font-family: ${printConfig.secondaryFont};" class="font-semibold text-blue-800 mt-4">Course No: ${data.courseNo}</p>
+ <div class="watermark"><i class="fa-solid fa-graduation-cap"></i></div>
+<div class="oxford-border" style="font-family: ${printConfig.bodyFont}">
+  <div class="text-center">
+    <img src="${logoBase64}" class="h-28 mx-auto mb-4" style="mix-blend-mode: multiply;">
+    <h1 style="font-family: ${printConfig.primaryFont}; font-size: ${printConfig.uniNameSize};" class="font-black text-blue-900 tracking-wide uppercase leading-tight">${config.uniName}</h1>
+    <p style="font-size: ${printConfig.locationSize};" class="font-bold text-gray-500 uppercase tracking-[4px] mt-1">${config.location}</p>
+    <div class="title-underline"></div>
+    <p style="font-size: ${printConfig.deptNameSize}; font-family: ${printConfig.secondaryFont};" class="font-medium italic text-gray-700 mt-2">Department of ${data.deptName}</p>
+  </div>
+
+  <div class="text-center px-12 mt-10">
+    <h2 style="font-family: ${printConfig.primaryFont}; font-size: 1.1rem;" class="font-bold text-gray-400 uppercase tracking-[0.2em] mb-4">Assignment On</h2>
+    <div class="bg-gray-50/60 py-10 px-6 border-y-2 border-gray-100 backdrop-blur-[1px]">
+        <h3 style="font-size: ${printConfig.courseNameSize}; font-family: ${printConfig.primaryFont};" class="font-bold text-gray-800 leading-snug">
+            ${data.courseName}
+        </h3>
+        <div class="mt-5 inline-block px-4 py-1 border border-blue-200 rounded-full">
+           <p style="font-size: ${printConfig.courseNoSize}; font-family: ${printConfig.secondaryFont};" class="font-bold text-blue-800">
+              Course No: ${data.courseNo}
+           </p>
         </div>
-      </div>
-      <div>
-        <div class="submission-grid" style="margin-bottom: ${showDate ? '0' : '20px'}">
-          <div class="info-box bg-gray-50/80 backdrop-blur-[2px]">
-            <h4 style="font-family: ${printConfig.secondaryFont}; font-size: ${printConfig.labelHeadingSize};" class="label-heading">Submitted By</h4>
-            <div class="space-y-1.5 text-gray-800">
-              <p style="font-family: ${printConfig.primaryFont}; font-size: ${printConfig.studentNameSize};" class="font-bold text-blue-900 mb-2">${data.studentName}</p>
-              <div style="font-size: ${printConfig.infoTextSize};" class="align-info"><span class="align-label">Roll</span>: <span class="ml-2 font-medium ">${data.rollNo}</span></div>
-              <div style="font-size: ${printConfig.infoTextSize};" class="align-info"><span class="align-label">Reg No</span>: <span class="ml-2 font-medium">${data.regNo}</span></div>
-              <div style="font-size: ${printConfig.infoTextSize};" class="align-info"><span class="align-label">Session</span>: <span class="ml-2 font-medium">${data.session}</span></div>
-            </div>
-          </div>
-          <div class="info-box bg-white/50 backdrop-blur-[2px]">
-            <h4 style="font-family: ${printConfig.secondaryFont}; font-size: ${printConfig.labelHeadingSize};" class="label-heading">Submitted To</h4>
-            <div class="space-y-1 text-gray-800">
-              <p style="font-family: ${printConfig.primaryFont}; font-size: ${printConfig.studentNameSize};" class=" font-bold text-blue-900">${data.teacherName}</p>
-              <p style="font-size: ${printConfig.infoTextSize};" class="font-semibold">Professor</p>
-              <p style="font-size: ${printConfig.infoTextSize};">${data.deptName}</p>
-              <p style="font-size: ${printConfig.infoTextSize};">${config.uniName}</p>
-            </div>
-          </div>
-        </div>
-        ${showDate ? `<div class="mt-8 text-center border-t border-gray-100 pt-4"><p style="font-size: ${printConfig.dateSize};" class="font-bold text-gray-500 uppercase tracking-widest">Date of Submission: ${data.date}</p></div>` : ''}
-      </div>
     </div>
+  </div>
+
+  <div class="mt-auto">
+    <div class="submission-grid" style="display: flex; gap: 20px; align-items: stretch; margin-bottom: ${showDate ? '0' : '30px'}">
+      
+      <div class="info-box bg-gray-50/80 backdrop-blur-[2px]" style="flex: 1; display: flex; flex-direction: column;">
+        <div style="flex-grow: 1;"> <h4 style="font-family: ${printConfig.secondaryFont}; font-size: 0.9rem;" class="label-heading mb-4">Submitted By</h4>
+            <div class="space-y-2 text-gray-800">
+              <p style="font-family: ${printConfig.primaryFont}; font-size: ${printConfig.studentNameSize};" class="font-bold text-blue-900 mb-3">${data.studentName}</p>
+              <div class="space-y-1">
+                <div style="font-size: ${printConfig.infoTextSize};" class="align-info">
+                  <span class="align-label">Roll</span>: <span class="ml-2 font-semibold">${data.rollNo}</span>
+                </div>
+                <div style="font-size: ${printConfig.infoTextSize};" class="align-info">
+                  <span class="align-label">Reg No</span>: <span class="ml-2 font-semibold">${data.regNo}</span>
+                </div>
+                <div style="font-size: ${printConfig.infoTextSize};" class="align-info">
+                  <span class="align-label">Session</span>: <span class="ml-2 font-semibold">${data.session}</span>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="mt-6 pt-3 border-t border-gray-200/50">
+          <p style="font-size:1.2rem;" class="font-bold text-gray-700">${config.uniName}</p>
+          <p style="font-size: 0.9rem;" class="text-gray-500 font-medium">${config.location}</p>
+        </div>
+      </div>
+
+      <div class="info-box bg-white/50 backdrop-blur-[2px]" style="flex: 1; display: flex; flex-direction: column;">
+        <div style="flex-grow: 1;">
+            <h4 style="font-family: ${printConfig.secondaryFont}; font-size: 0.9rem;" class="label-heading mb-4">Submitted To</h4>
+            <div class="space-y-1.5 text-gray-800">
+              <p style="font-family: ${printConfig.primaryFont}; font-size: ${printConfig.studentNameSize};" class="font-bold text-blue-900 mb-1">${data.teacherName}</p>
+              <p style="font-size: 1.1rem;" class="font-semibold text-gray-700">Professor</p>
+              <p style="font-size: ${printConfig.infoTextSize};" class="font-medium">Dept. of ${data.deptName}</p>
+            </div>
+        </div>
+        <div class="mt-6 pt-3 border-t border-gray-200/50">
+          <p style="font-size:1.2rem;" class="font-bold text-gray-700">${config.uniName}</p>
+          <p style="font-size: 0.9rem;" class="text-gray-500 font-medium">${config.location}</p>
+        </div>
+      </div>
+      
+    </div>
+
+    ${showDate ? `
+    <div class="mt-10 text-center border-t border-gray-100 pt-6">
+        <p style="font-size: ${printConfig.dateSize};" class="font-bold text-gray-400 uppercase tracking-[0.3em]">
+           Date of Submission: <span class="text-gray-700">${data.date}</span>
+        </p>
+    </div>` : ''}
+  </div>
+</div>
   `;
 }
 init();
