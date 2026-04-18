@@ -1,1 +1,374 @@
-<input type="checkbox" id="rememberMe" class="w-3.5 h-3.5 accent-blue-900" checked>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academic Cover Page | IU Bangladesh</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root { 
+      --a4-width: 210mm; 
+      --a4-height: 297mm; 
+      --primary-blue: #1e3a8a;
+      --accent-gold: #b4934a;
+    }
+    body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
+    
+    #capture-area { display: none; }
+
+    @media print { 
+      @page { size: A4; margin: 0; } 
+      body { background: white; margin: 0; padding: 0; } 
+      .no-print { display: none !important; } 
+      #capture-area { 
+        display: block !important;
+        width: var(--a4-width); 
+        height: var(--a4-height); 
+        background: white; 
+        margin: 0; padding: 15mm; 
+        box-sizing: border-box; 
+        position: relative;
+        print-color-adjust: exact;
+        overflow: hidden; 
+      } 
+    }
+
+    /* Toast Animation */
+    #toast-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+    }
+    .toast {
+      background: #ef4444;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: slideIn 0.3s ease-out forwards;
+    }
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .watermark {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%) rotate(-30deg);
+      font-size: 400px; color: rgba(30, 58, 138, 0.08); 
+      z-index: 0; pointer-events: none;
+    }
+
+    .oxford-border{
+      border: 2px solid var(--primary-blue); height: 100%;
+      padding: 10mm; position: relative;
+      display: flex; flex-direction: column; justify-content: space-between; z-index: 1; 
+    }
+    .oxford-border::before{
+      content: ''; position: absolute;
+      top: 4px; left: 4px; right: 4px; bottom: 4px;
+      border: 1px solid var(--primary-blue);
+    }
+    .title-underline{ width: 100px; height: 3px; background: var(--accent-gold); margin: 15px auto; }
+    .submission-grid{
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+      border-top: 2px solid var(--primary-blue); margin-top: 30px;
+    }
+    .info-box{ padding: 20px; }
+    .info-box:first-child{ border-right: 1px solid #e5e7eb; }
+    .label-heading{ color: var(--primary-blue); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; }
+    .hidden-field { display: none; }
+    .align-info { display: flex; align-items: flex-start; }
+    .align-label { min-width: 65px; display: inline-block; font-weight: 600; }
+    .input-error { border: 2px solid #ef4444 !important; background-color: #fef2f2 !important; }
+  </style>
+</head>
+<body class="p-0 md:p-8">
+
+<div id="toast-container"></div>
+
+<div class="max-w-md mx-auto">
+  <div class="no-print">
+    <div class="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
+      <div class="bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 p-6 text-white text-center border-b-4 border-yellow-500">
+        <div class="inline-block p-3 bg-white/10 rounded-full mb-3 backdrop-blur-sm">
+            <i class="fa-solid fa-graduation-cap text-3xl text-yellow-400"></i>
+        </div>
+        <h2 class="text-2xl font-extrabold tracking-tight">
+          Auto Assignment <span class="text-yellow-400">Cover Page</span>
+        </h2>
+        <div class="flex items-center justify-center gap-2 mt-6 text-sm font-medium bg-gradient-to-r from-black/40 via-black/20 to-black/40 backdrop-blur-sm py-3 px-6 rounded-full shadow-lg border border-white/10">
+            <span class="text-gray-200"> Developed by</span>
+            <a href="https://www.facebook.com/monirulptk" target="_blank" class="group flex items-center gap-2 text-amber-300 hover:text-white transition-all duration-300 ease-out hover:scale-105">
+                <span class="font-semibold tracking-wide">Monirul Islam</span>
+                <i class="fas fa-heart text-xs text-red-500 group-hover:animate-pulse transition-all"></i>
+            </a>
+        </div>
+      </div>
+
+      <div class="p-6 space-y-5">
+        
+        <div class="space-y-3 pt-2">
+          <label class="text-xs font-black uppercase text-blue-900 tracking-widest border-b pb-1 block">Course Info</label>
+          <select id="courseNoDropdown" class="w-full p-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500" onchange="toggleCustomField('courseNoDropdown', 'courseNoCustom')"></select>
+          <input type="text" id="courseNoCustom" placeholder="Type course code" class="hidden-field w-full p-2.5 border-dashed border-2 border-blue-200 rounded-lg text-sm outline-none bg-blue-50">
+          
+          <select id="courseSelectDropdown" class="w-full p-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500" onchange="toggleCustomField('courseSelectDropdown', 'courseSelect')"></select>
+          <input type="text" id="courseSelect" placeholder="Type course name" class="hidden-field w-full p-2.5 border-dashed border-2 border-blue-200 rounded-lg text-sm outline-none bg-blue-50">
+        </div>
+
+        <div class="space-y-3 pt-2">
+          <label class="text-xs font-black uppercase text-blue-900 tracking-widest border-b pb-1 block">Instructor</label>
+          <select id="instructorSelectDropdown" class="w-full p-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500" onchange="toggleCustomField('instructorSelectDropdown', 'instructorSelect')"></select>
+          <input type="text" id="instructorSelect" placeholder="Type instructor name" class="hidden-field w-full p-2.5 border-dashed border-2 border-blue-200 rounded-lg text-sm outline-none bg-blue-50">
+        </div>
+
+        <div class="space-y-3 pt-2">
+          <div class="flex justify-between items-center border-b pb-1">
+            <label class="text-xs font-black uppercase text-blue-900 tracking-widest block">Student Info</label>
+            <div class="flex items-center gap-1.5">
+              <input type="checkbox" id="rememberMe" class="w-3.5 h-3.5 accent-blue-900 " checked>
+              <label for="rememberMe" class="text-[10px] font-bold text-blue-700 uppercase cursor-pointer ">Remember Me</label>
+            </div>
+          </div>
+          <input type="text" id="studentName" placeholder="Full Name" class="w-full p-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm outline-none">
+          <div class="flex gap-2">
+            <input type="text" id="rollNo" placeholder="Roll No" class="w-1/2 p-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm outline-none">
+            <input type="text" id="regNo" placeholder="Reg No" class="w-1/2 p-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm outline-none">
+          </div>
+          <select id="sessionDropdown" class="w-full p-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500" onchange="toggleCustomField('sessionDropdown', 'session')"></select>
+          <input type="text" id="session" placeholder="Type custom session" class="hidden-field w-full p-2.5 border-dashed border-2 border-blue-200 rounded-lg text-sm outline-none bg-blue-50">
+        </div>
+
+        <div class="space-y-3 pt-2">
+          <div class="flex items-center justify-between border-b pb-1">
+            <label class="text-xs font-black uppercase text-blue-900 tracking-widest block">Department & Date</label>
+            <div class="flex items-center gap-2">
+                <input type="checkbox" id="includeDate" class="w-4 h-4 accent-blue-900">
+                <label for="includeDate" class="text-[10px] font-bold text-gray-500 uppercase">Include Date</label>
+            </div>
+          </div>
+          <select id="departmentDropdown" class="w-full p-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500" onchange="toggleCustomField('departmentDropdown', 'department')"></select>
+          <input type="text" id="department" placeholder="Type department name" class="hidden-field w-full p-2.5 border-dashed border-2 border-blue-200 rounded-lg text-sm outline-none bg-blue-50">
+          <input type="date" id="submissionDate" class="w-full p-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <button onclick="handlePrint()" class="w-full bg-blue-900 hover:bg-blue-800 text-white font-bold py-4 rounded-xl shadow-lg flex items-center justify-center gap-2 transition-all transform active:scale-95 mt-6">
+          <i class="fas fa-print"></i> Print or Save PDF
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="capture-area"></div>
+
+<script>
+const printConfig = {
+  uniNameSize: "2.8rem",
+  locationSize: "1rem",
+  deptNameSize: "1.2rem",
+  assignmentOnSize: "1rem",
+  courseNameSize: "2rem",
+  courseNoSize: "1.2rem",
+  labelHeadingSize: "1rem",
+  studentNameSize: "1.5rem",
+  infoTextSize: "1.3rem",
+  dateSize: "1rem",
+  primaryFont: "'Playfair Display', serif",
+  secondaryFont: "'Libre+Baskerville', serif",
+  bodyFont: "'Inter', sans-serif"
+};
+
+const dropdownOptions = {
+  courseCodes: ["Q-2401","Q-2402","Q-2403","Q-2404","Q-2405", "Q-2301", "Q-2302", "Q-2303","Q-2304","Q-2305"],
+  courses: ["Tafsir Without Chain Of Narration","Arabic Literature and Its History","Philosophy And Muslim Sufism","Islamic History","Computer Literacy And Technology", "Modern Tafsir", "Sciences of the Noble Qur'an","Sciences of Hadith","Biography of the Prophet (S.A.W)","Communicative English Language",],
+  instructors: [
+    "Professor Dr. A. B. M. Saiful Islam Siddiqi", "Professor Dr. A. B. M. Faruq", "Professor Dr. A. F. M. Akbar Hossain", "Professor Dr. H. A. N. M. Ershad Ullah", "Professor Dr. A. B. M. Siddiqur Rahman Asrafi", "Professor Dr. Md Loqman Husain", "Professor Dr. M. Yaqub Ali", "Professor Dr. Muhammad Nasir Uddin Mizy", "Professor Dr. Muhammad Jalal Uddin", "Professor Dr. Muhammad Golam Rabbani", "Professor Dr. Khan Muhammad Ylias", "Professor Dr. Md Aminul Islam", "Professor Dr. Sheikh A. B. M. Zakir Hossain", "Professor Dr. A. K. M. Rasheduzaman"
+  ],
+  sessions: ["2023-24", "2022-23"],
+  departments: ["Al-Quran & Islamic Studies", "Arabic Language"]
+};
+
+const config = { uniName: "Islamic University", location: "Kushtia, Bangladesh" };
+let logoBase64 = "./Islalmi University log.png";
+
+function init() {
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('submissionDate').value = today;
+  initDropdowns();
+  loadRememberedData();
+}
+
+function showToast(message) {
+  const container = document.getElementById('toast-container');
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.innerHTML = `<i class="fas fa-exclamation-circle"></i> <span>${message}</span>`;
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
+function loadRememberedData() {
+  const saved = localStorage.getItem('student_data');
+  if (saved) {
+    const data = JSON.parse(saved);
+    document.getElementById('studentName').value = data.name || "";
+    document.getElementById('rollNo').value = data.roll || "";
+    document.getElementById('regNo').value = data.reg || "";
+    document.getElementById('sessionDropdown').value = data.session || "";
+    document.getElementById('rememberMe').checked = true;
+  }
+}
+
+function saveStudentData() {
+  if (document.getElementById('rememberMe').checked) {
+    const data = {
+      name: document.getElementById('studentName').value,
+      roll: document.getElementById('rollNo').value,
+      reg: document.getElementById('regNo').value,
+      session: document.getElementById('sessionDropdown').value
+    };
+    localStorage.setItem('student_data', JSON.stringify(data));
+  } else {
+    localStorage.removeItem('student_data');
+  }
+}
+
+function initDropdowns() {
+  const populate = (id, options) => {
+    const select = document.getElementById(id);
+    select.innerHTML = '<option value="">Select Option</option>';
+    options.forEach(opt => {
+      const el = document.createElement('option'); el.value = opt; el.textContent = opt;
+      select.appendChild(el);
+    });
+    const custom = document.createElement('option'); custom.value = "custom"; custom.textContent = "-- Custom --";
+    select.appendChild(custom);
+  };
+  populate('courseNoDropdown', dropdownOptions.courseCodes);
+  populate('courseSelectDropdown', dropdownOptions.courses);
+  populate('instructorSelectDropdown', dropdownOptions.instructors);
+  populate('sessionDropdown', dropdownOptions.sessions);
+  populate('departmentDropdown', dropdownOptions.departments);
+}
+
+function toggleCustomField(dropdownId, customFieldId) {
+  const dropdown = document.getElementById(dropdownId);
+  const customField = document.getElementById(customFieldId);
+  dropdown.classList.remove('input-error');
+  customField.style.display = dropdown.value === "custom" ? "block" : "none";
+  if (dropdown.value !== "custom") customField.value = "";
+}
+
+function handlePrint() {
+  const required = [
+    {id: 'courseNoDropdown', name: 'Course Code'},
+    {id: 'courseSelectDropdown', name: 'Course Name'},
+    {id: 'instructorSelectDropdown', name: 'Instructor'},
+    {id: 'studentName', name: 'Student Name'},
+    {id: 'sessionDropdown', name: 'Session'}
+  ];
+
+  let firstError = null;
+  required.forEach(field => {
+    const el = document.getElementById(field.id);
+    if (!el.value.trim()) {
+      el.classList.add('input-error');
+      if (!firstError) firstError = field.name;
+    } else {
+      el.classList.remove('input-error');
+    }
+  });
+
+  if (firstError) {
+    showToast(`${firstError} is required!`);
+    return;
+  }
+
+  saveStudentData();
+  document.title = document.getElementById('rollNo').value || "CoverPage";
+  generateTemplate();
+  setTimeout(() => { window.print(); }, 200);
+}
+
+function generateTemplate(){
+  const getValue = (dropdownId, customId) => {
+    const dVal = document.getElementById(dropdownId).value;
+    const cVal = document.getElementById(customId).value;
+    return (dVal === "custom" ? cVal : dVal) || "..........";
+  };
+
+  const rawDate = document.getElementById('submissionDate').value;
+  const formattedDate = rawDate ? new Date(rawDate).toLocaleDateString('en-GB', {day:'numeric', month:'long', year:'numeric'}) : "N/A";
+  const showDate = document.getElementById('includeDate').checked;
+
+  const data = {
+    studentName: document.getElementById('studentName').value.toUpperCase(),
+    rollNo: document.getElementById('rollNo').value || "..........",
+    regNo: document.getElementById('regNo').value || "..........",
+    session: getValue('sessionDropdown', 'session'),
+    courseName: getValue('courseSelectDropdown', 'courseSelect'),
+    courseNo: getValue('courseNoDropdown', 'courseNoCustom'),
+    teacherName: getValue('instructorSelectDropdown', 'instructorSelect'),
+    deptName: getValue('departmentDropdown', 'department'),
+    date: formattedDate
+  };
+
+  document.getElementById('capture-area').innerHTML = `
+    <div class="watermark"><i class="fa-solid fa-graduation-cap"></i></div>
+    <div class="oxford-border" style="font-family: ${printConfig.bodyFont}">
+      <div class="text-center">
+        <img src="${logoBase64}" class="h-28 mx-auto mb-6" style="mix-blend-mode: multiply;">
+        <h1 style="font-family: ${printConfig.primaryFont}; font-size: ${printConfig.uniNameSize};" class="font-black text-blue-900 tracking-wide uppercase mb-1">${config.uniName}</h1>
+        <p style="font-size: ${printConfig.locationSize};" class="font-bold text-gray-600 uppercase tracking-[3px]">${config.location}</p>
+        <div class="title-underline"></div>
+        <p style="font-size: ${printConfig.deptNameSize}; font-family: ${printConfig.secondaryFont};" class="font-medium italic text-gray-700 mt-2">${data.deptName}</p>
+      </div>
+      <div class="text-center px-10 mt-12">
+        <h2 style="font-family: ${printConfig.primaryFont}; font-size: ${printConfig.assignmentOnSize};" class="font-bold text-gray-500 uppercase tracking-widest mb-4">Assignment On</h2>
+        <div class="bg-gray-50/80 py-8 px-4 border-y-2 border-gray-100 backdrop-blur-[2px]">
+            <h3 style="font-size: ${printConfig.courseNameSize}; font-family: ${printConfig.primaryFont};" class="font-bold text-gray-800 leading-tight">${data.courseName}</h3>
+            <p style="font-size: ${printConfig.courseNoSize}; font-family: ${printConfig.secondaryFont};" class="font-semibold text-blue-800 mt-4">Course No: ${data.courseNo}</p>
+        </div>
+      </div>
+      <div>
+        <div class="submission-grid" style="margin-bottom: ${showDate ? '0' : '20px'}">
+          <div class="info-box bg-gray-50/80 backdrop-blur-[2px]">
+            <h4 style="font-family: ${printConfig.secondaryFont}; font-size: ${printConfig.labelHeadingSize};" class="label-heading">Submitted By</h4>
+            <div class="space-y-1.5 text-gray-800">
+              <p style="font-family: ${printConfig.primaryFont}; font-size: ${printConfig.studentNameSize};" class="font-bold text-blue-900 mb-2">${data.studentName}</p>
+              <div style="font-size: ${printConfig.infoTextSize};" class="align-info"><span class="align-label">Roll</span>: <span class="ml-2 font-medium ">${data.rollNo}</span></div>
+              <div style="font-size: ${printConfig.infoTextSize};" class="align-info"><span class="align-label">Reg No</span>: <span class="ml-2 font-medium">${data.regNo}</span></div>
+              <div style="font-size: ${printConfig.infoTextSize};" class="align-info"><span class="align-label">Session</span>: <span class="ml-2 font-medium">${data.session}</span></div>
+            </div>
+          </div>
+          <div class="info-box bg-white/50 backdrop-blur-[2px]">
+            <h4 style="font-family: ${printConfig.secondaryFont}; font-size: ${printConfig.labelHeadingSize};" class="label-heading">Submitted To</h4>
+            <div class="space-y-1 text-gray-800">
+              <p style="font-family: ${printConfig.primaryFont}; font-size: ${printConfig.studentNameSize};" class=" font-bold text-blue-900">${data.teacherName}</p>
+              <p style="font-size: ${printConfig.infoTextSize};" class="font-semibold">Professor</p>
+              <p style="font-size: ${printConfig.infoTextSize};">${data.deptName}</p>
+              <p style="font-size: ${printConfig.infoTextSize};">${config.uniName}</p>
+            </div>
+          </div>
+        </div>
+        ${showDate ? `<div class="mt-8 text-center border-t border-gray-100 pt-4"><p style="font-size: ${printConfig.dateSize};" class="font-bold text-gray-500 uppercase tracking-widest">Date of Submission: ${data.date}</p></div>` : ''}
+      </div>
+    </div>
+  `;
+}
+init();
+</script>
+</body>
+</html>
